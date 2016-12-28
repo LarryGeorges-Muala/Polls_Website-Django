@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Choice | Polls</title>
+	<meta charset= "UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1">
+	<meta name="author" content="Larry Georges">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+</head>
+
+<body>
+
+	<!-- Navigation bar -->
+	<nav>		
+		<ul>
+			<li class="active"><a href="#">Home</a></li>
+			<li><a href="http://127.0.0.1:8000/about/">About</a></li>
+		</ul>
+	</nav>
+
+	<br />
+	
+	<h1 class="header">{{ question.question_text }}</h1>
+
+		<br />
+
+	{% if error_message %}
+
+	<p>
+		<strong>{{ error_message }}</strong>
+	</p>
+
+	{% endif %}
+
+
+	<form action="{% url 'polls:vote' question.id %}" method="post">
+
+	{% csrf_token %}
+
+	{% for choice in question.choice_set.all %}
+
+		<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+		
+		<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+		
+	{% endfor %}
+
+		<input class="submit" type="submit" value="Vote" />
+
+	</form>
+
+
+</body>
+
+</html>

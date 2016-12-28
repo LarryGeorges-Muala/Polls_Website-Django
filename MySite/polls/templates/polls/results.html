@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Vote Results | Polls</title>
+	<meta charset= "UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1">
+	<meta name="author" content="Larry Georges">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+</head>
+
+<body>
+
+	<!-- Navigation bar -->
+	<!-- with active link to the current tab-->
+	<nav>		
+		<ul>
+			<li class="active"><a href="#">Home</a></li>
+			<li><a href="http://127.0.0.1:8000/about/">About</a></li>
+		</ul>
+	</nav>
+
+	<br />
+	
+	<h1 class="header">{{ question.question_text }}</h1>
+
+		<br />
+
+	<ul>
+		{% for choice in question.choice_set.all %}
+			
+			<li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+		
+		{% endfor %}
+	</ul>
+
+	<a class="voteAgain" href="{% url 'polls:detail' question.id %}">Vote again?</a>
+
+</body>
+
+</html>
